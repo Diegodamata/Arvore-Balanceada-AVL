@@ -41,7 +41,13 @@ public class Main {
             no.setRight(insert(no.getRight(), value));
         }
 
+        no.setHeight(Math.max(altura(no.getLeft()), altura(no.getRight())) + 1);
+
         return no;
     }
 
+    public static int altura(Node<Integer> no){
+        if (no == null) return -1;
+        return no.getHeight();
+    }
 }
