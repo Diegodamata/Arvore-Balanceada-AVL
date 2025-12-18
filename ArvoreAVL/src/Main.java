@@ -51,7 +51,7 @@ public class Main {
     private static Node<Integer> varificarRotacao(int fatorBalanceamento, Node<Integer> no) {
         if (fatorBalanceamento > 1){
             if (altura(no.getLeft()) == -1){
-                //return rotacaoEsquerdaDireita(no);
+                return rotacaoEsquerdaDireita(no);
             }
             return rotacaoDireita(no);
         }
@@ -94,9 +94,21 @@ public class Main {
         return j;
     }
 
-    //    private static Node<Integer> rotacaoEsquerdaDireita(Node<Integer> no) {
-//
-//    }
+    private static Node<Integer> rotacaoEsquerdaDireita(Node<Integer> no) {
+        Node<Integer> j, k;
+
+        k = no.getLeft();
+        j = k.getRight();
+
+        no.setLeft(j);
+        j.setLeft(k);
+
+        k.setHeight(Math.max(altura(k.getLeft()), altura(k.getRight()) + 1));
+        j.setHeight(Math.max(altura(j.getLeft()), altura(j.getRight()) + 1));
+        no.setHeight(Math.max(altura(no.getLeft()), altura(no.getRight()) + 1));
+
+        return rotacaoDireita(j);
+    }
     private static int fatorBalanceamento(Node<Integer> no) {
         if (no != null){
             return altura(no.getLeft()) - altura(no.getRight());
