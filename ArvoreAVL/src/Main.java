@@ -53,7 +53,9 @@ public class Main {
             if (altura(no.getLeft()) == -1){
                 //return rotacaoEsquerdaDireita(no);
             }
-           // return rotacaoDireita(no);
+
+                return rotacaoDireita(no);
+
         }
         if (fatorBalanceamento < -1) {
             if (altura(no.getRight()) == 1){
@@ -62,6 +64,21 @@ public class Main {
            // return rotacaoEsquerda(no);
         }
         return no;
+    }
+
+    private static Node<Integer> rotacaoDireita(Node<Integer> no) {
+        Node<Integer> j, k;
+
+        j = no.getLeft();
+        k = j.getRight();
+
+        j.setRight(no);
+        no.setLeft(k);
+
+        no.setHeight(Math.max(altura(no.getLeft()), altura(no.getRight()) + 1));
+        j.setHeight(Math.max(altura(j.getLeft()), altura(j.getRight()) + 1));
+
+        return j;
     }
 
     private static int fatorBalanceamento(Node<Integer> no) {
