@@ -43,7 +43,32 @@ public class Main {
 
         no.setHeight(Math.max(altura(no.getLeft()), altura(no.getRight())) + 1);
 
+        Node<Integer> node = varificarRotacao(fatorBalanceamento(no), no);
+
+        return node;
+    }
+
+    private static Node<Integer> varificarRotacao(int fatorBalanceamento, Node<Integer> no) {
+        if (fatorBalanceamento > 1){
+            if (altura(no.getLeft()) == -1){
+                //return rotacaoEsquerdaDireita(no);
+            }
+           // return rotacaoDireita(no);
+        }
+        if (fatorBalanceamento < -1) {
+            if (altura(no.getRight()) == 1){
+               // return rotacaoDireitaEsquerda(no);
+            }
+           // return rotacaoEsquerda(no);
+        }
         return no;
+    }
+
+    private static int fatorBalanceamento(Node<Integer> no) {
+        if (no != null){
+            return altura(no.getLeft()) - altura(no.getRight());
+        }
+        return 0;
     }
 
     public static int altura(Node<Integer> no){
