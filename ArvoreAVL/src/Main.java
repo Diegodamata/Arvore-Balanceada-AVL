@@ -43,12 +43,13 @@ public class Main {
 
         no.setHeight(Math.max(altura(no.getLeft()), altura(no.getRight())) + 1);
 
-        Node<Integer> node = varificarRotacao(fatorBalanceamento(no), no);
+        System.out.println(no.getValue());
+        Node<Integer> node = verificarRotacao(fatorBalanceamento(no), no);
 
         return node;
     }
 
-    private static Node<Integer> varificarRotacao(int fatorBalanceamento, Node<Integer> no) {
+    private static Node<Integer> verificarRotacao(int fatorBalanceamento, Node<Integer> no) {
         if (fatorBalanceamento > 1){
             if (altura(no.getLeft()) == -1){
                 return rotacaoEsquerdaDireita(no);
@@ -57,7 +58,7 @@ public class Main {
         }
         if (fatorBalanceamento < -1) {
             if (altura(no.getRight()) == 1){
-               // return rotacaoDireitaEsquerda(no);
+               return rotacaoDireitaEsquerda(no);
             }
             return rotacaoEsquerda(no);
         }
@@ -94,6 +95,22 @@ public class Main {
         return j;
     }
 
+    private static Node<Integer> rotacaoDireitaEsquerda(Node<Integer> no) {
+        Node<Integer> j, k;
+
+        k = no.getRight();
+        j = k.getLeft();
+
+        no.setRight(j);
+        j.setRight(k);
+
+        k.setHeight(Math.max(altura(k.getLeft()), altura(k.getRight()) + 1));
+        j.setHeight(Math.max(altura(j.getLeft()), altura(j.getRight()) + 1));
+        no.setHeight(Math.max(altura(no.getLeft()), altura(no.getRight()) + 1));
+
+        return rotacaoEsquerda(no);
+    }
+
     private static Node<Integer> rotacaoEsquerdaDireita(Node<Integer> no) {
         Node<Integer> j, k;
 
@@ -107,7 +124,7 @@ public class Main {
         j.setHeight(Math.max(altura(j.getLeft()), altura(j.getRight()) + 1));
         no.setHeight(Math.max(altura(no.getLeft()), altura(no.getRight()) + 1));
 
-        return rotacaoDireita(j);
+        return rotacaoDireita(no);
     }
     private static int fatorBalanceamento(Node<Integer> no) {
         if (no != null){
